@@ -58,7 +58,7 @@ class TestStockTwitsCryptoSymbols:
             ("BTC-USDT", "BTC.X"),    # stablecoin quote
             ("AMD", "AMD"),
             ("BRK-B", "BRK-B"),       # dashed class share: untouched
-            ("GOLD", "GOLD"),         # real equity (aliases elsewhere): untouched here
+            ("GOLD", "GOLD"),         # real equity: untouched here
             ("XYZ-USD", "XYZ-USD"),   # unknown base: not treated as crypto
         ],
     )

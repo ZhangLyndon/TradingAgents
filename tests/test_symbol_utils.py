@@ -26,7 +26,6 @@ class TestNormalizeSymbol(unittest.TestCase):
         self.assertEqual(normalize_symbol("XAUUSD"), "GC=F")
         self.assertEqual(normalize_symbol("XAUUSD+"), "GC=F")   # broker CFD suffix
         self.assertEqual(normalize_symbol("xauusd+"), "GC=F")
-        self.assertEqual(normalize_symbol("GOLD"), "GC=F")
         self.assertEqual(normalize_symbol("XAGUSD"), "SI=F")
 
     def test_energy_and_index_aliases(self):
@@ -87,8 +86,8 @@ class TestCryptoBase(unittest.TestCase):
         self.assertEqual(crypto_base("sol-usd"), "SOL")
 
     def test_non_crypto_returns_none(self):
-        # Plain equities, class shares, and real tickers that alias elsewhere
-        # (GOLD -> gold future on the Yahoo path) must NOT read as crypto.
+        # Plain equities, class shares, and real tickers must NOT read as
+        # crypto.
         for raw in ("AAPL", "BRK-B", "GOLD", "XYZ-USD", "EURUSD", "", None):
             self.assertIsNone(crypto_base(raw))
 
