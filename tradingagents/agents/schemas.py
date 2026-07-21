@@ -339,3 +339,24 @@ def render_sentiment_report(report: SentimentReport) -> str:
         "",
         report.narrative,
     ])
+
+# ---------------------------------------------------------------------------
+# Technical Analyst
+# ---------------------------------------------------------------------------
+
+class MarketPrediction(BaseModel):
+    """
+    Structured output produced by the Technical Analyst.
+
+    The technical analyst evaluates computed technical indicators using a rule-
+    based framework that considers the Relative Strength Index and price trends
+    relative to Simple Moving Averages. This schema defines the structured tra-
+    ding signal returned by the LLM, including the ticker, recommended action,
+    confidence score, and rationale behind the decision.
+    """
+    ticker: str = Field(description = "Stock ticker symbol")
+    signal: Literal["BUY", "SELL", "HOLD"] = Field(description = "Trading recommendation based on technical indicators")
+    confidence_score: float = Field(ge = 0.0,
+                                    le = 1.0,
+                                    description = "Confidence score from 0.0 to 1.0 representing indicator alignment")
+    reasoning: str = Field(description = "Concise rationale explaining how the indicators justify this signal")

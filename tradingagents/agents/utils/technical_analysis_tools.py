@@ -1,6 +1,6 @@
 from typing import Annotated
 
-import pandas_ta_classic  # noqa
+import pandas_ta_classic  # noqa: F401
 import yfinance as yf
 from langchain_core.tools import tool
 
@@ -36,7 +36,7 @@ def get_technical_analysis(ticker: Annotated[str, "Yahoo Finance symbol"],
     latest = df.iloc[-1]
     previous = df.iloc[-2]
 
-    # Format a concise numerical technical profile for the LLM
+    # Format a technical analysis profile for the LLM
     summary = f"""
     Technical Analysis Profile for {ticker} ({interval} candles, {period} lookback):
     - Current Price: ${latest["Close"]:.2f}
