@@ -71,22 +71,20 @@ def create_technical_analyst(llm: Any, ticker_symbol: str):
     result = structured_llm.invoke(full_llm_input)
     return result
 
-def run_technical_analysis_agent(ticker_symbol: str):
+def main():
+    from cli.utils import get_ticker
     from tradingagents.default_config import DEFAULT_CONFIG
     from tradingagents.llm_clients import create_llm_client
 
+    ticker_symbol = get_ticker()
     config = deepcopy(DEFAULT_CONFIG)
 
     quick_client = create_llm_client(provider = config["llm_provider"],
                                      model = config["quick_think_llm"])
     quick_thinking_llm = quick_client.get_llm()
 
-    return create_technical_analyst(quick_thinking_llm, ticker_symbol)
+    result = create_technical_analyst(quick_thinking_llm, ticker_symbol)
+    print(result.model_dump_json(indent = 2))
 
 if __name__ == "__main__":
-    from cli.utils import get_ticker
-
-    ticker_symbol = get_ticker()
-    result = run_technical_analysis_agent(ticker_symbol)
-
-    print(result.model_dump_json(indent = 2))
+    main()

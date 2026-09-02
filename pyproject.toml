@@ -50,6 +50,7 @@ bedrock = [
 
 [project.scripts]
 tradingagents = "cli.main:app"
+technicalanalyst = "tradingagents.agents.analysts.technical_analyst:main"
 
 [tool.setuptools.packages.find]
 include = ["tradingagents*", "cli*"]

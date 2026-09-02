@@ -184,9 +184,9 @@ def _needs_same_day_refresh(data_file, curr_date_dt, today_date) -> bool:
 def load_ohlcv(symbol: str, curr_date: str) -> pd.DataFrame:
     """Fetch OHLCV data with caching, filtered to prevent look-ahead bias.
 
-    Downloads 5 years of data up to the current day (curr_date) and caches per
-    symbol. On subsequent calls the cache is reused. Rows after curr_date are
-    filtered out so backtests never see future prices.
+    Downloads up to 5 years of data ending at curr_date and caches per symbol.
+    On subsequent calls the cache is reused. Rows after curr_date are filtered
+    out so backtests never see future prices.
     """
     # Resolve broker/forex symbols (XAUUSD+ -> GC=F) to Yahoo's convention,
     # then reject values that would escape the cache directory when
@@ -197,7 +197,7 @@ def load_ohlcv(symbol: str, curr_date: str) -> pd.DataFrame:
     config = get_config()
     curr_date_dt = pd.to_datetime(curr_date).normalize()
 
-    # Cache uses a fixed window (5 years to current day), so one file per symbol.
+    # Cache uses a 5-year lookback from curr_date, with one file per symbol.
     today_date = pd.Timestamp.today()
     start_date = curr_date_dt - pd.DateOffset(years = 5)
     start_str = start_date.strftime("%Y-%m-%d")
